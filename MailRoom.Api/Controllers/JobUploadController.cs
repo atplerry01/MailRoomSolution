@@ -45,33 +45,39 @@ namespace MailRoom.Api.Controllers
             {
                 if (!string.IsNullOrEmpty(row))
                 {
-
                     // get brachId
+                    var sn = row.Split(';')[0];
+                    var name = row.Split(';')[0];
+                    var pan = row.Split(';')[0];
                     var brCode = row.Split(';')[0];
+                    var brName = row.Split(';')[0];
+                    var custName = row.Split(';')[0];
+                    var custNumber= row.Split(';')[0];
+                    var accNumber = row.Split(';')[0];
+                    var fName = row.Split(';')[0];
 
-                    var branch = context.ClientBranches.FirstOrDefault(b => b.BranchCode == brCode);
+                    //var branch = context.ClientBranches.FirstOrDefault(b => b.BranchCode == brCode);
 
                     JobData jobData = new JobData()
                     {
-                        ClientBranchId = branch.Id
+                        SN = sn,
+                        Name = name,
+                        Pan = pan,
+                        BranchCode = brCode,
+                        BranchName = brName,
+                        CustodianName = custName,
+                        CustodianNumber = custNumber,
+                        AccountNumber = accNumber,
+                        FileName = fName
                     };
-                    var col1 = row.Split(';')[0];
-                    var col2 = row.Split(';')[1];
-                    var col3 = row.Split(';')[2];
 
-                    //Build the object data
+                    context.Jobdatas.Add(jobData);
 
                 }
+
+                await context.SaveChangesAsync();
             }
 
-
-
-            // //Todo: Creating a thumnail for the file
-            // var photo = new IssueImage { FileName = fileName };
-            // issueTracker.IssueImages.Add(photo);
-            // await context.SaveChangesAsync();
-
-            // return Ok(mapper.Map<IssueImage, IssueImageResource>(photo));
             return Ok();
         }
 

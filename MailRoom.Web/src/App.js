@@ -23,6 +23,8 @@ class App extends Component {
   onHandleClick = (e, file) => {
     e.preventDefault();
 
+    console.log(file);
+
     const url = 'http://localhost:5000/api/jobupload';
     const formData = new FormData();
     formData.append('file', file)
@@ -64,7 +66,7 @@ class App extends Component {
               <Dropzone
                 onDrop={this.onImageDrop.bind(this)}
                 multiple={false}
-                accept="image/*">
+                accept="text/*,">
                 <div>Drop an image or click to select a file to upload.</div>
               </Dropzone>
             </div>
