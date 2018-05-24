@@ -133,6 +133,7 @@ namespace MailRoom.Api.Controllers
                             AccountNumber = data.AccountNumber,
                             FileName = data.FileName,
 
+                            JobManifestId = jobManifest.Id,
                             JobManifestBranchId = branchManifest.Id
                         };
 

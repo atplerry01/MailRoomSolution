@@ -16,11 +16,11 @@ namespace MailRoom.Api.Models
         public JobManifest JobManifest { get; set; }
 
 
-        // public ICollection<JobManifestLog> JobManifestLogs { get; set; }
-        // public JobManifestBranch()
-        // {
-        //     JobManifestLogs = new Collection<JobManifestLog>();
-        // }
+        public ICollection<JobManifestLog> JobManifestLogs { get; set; }
+        public JobManifestBranch()
+        {
+            JobManifestLogs = new Collection<JobManifestLog>();
+        }
 
     }
 }

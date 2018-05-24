@@ -14,8 +14,7 @@ namespace MailRoom.Api.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-            //modelBuilder.Entity<JobManifestBranch>().HasMany(t => t.JobManifestLogs).WithMany(a=>a.).WillCascadeOnDelete(false);
-
+           
             // modelBuilder.Entity<JobManifestLog>()
             //     .HasKey(bc => new { bc.JobManifestId, bc.JobManifestBranchId });
 
@@ -40,7 +39,7 @@ namespace MailRoom.Api.Persistence
         public DbSet<JobData> Jobdatas { get; set; }
         public DbSet<JobManifest> JobManifests { get; set; }
         public DbSet<JobManifestBranch> JobManifestBranches { get; set; }
-        //public DbSet<JobManifestLog> JobManifestLogs { get; set; }
+        public DbSet<JobManifestLog> JobManifestLogs { get; set; }
 
     }
 }
