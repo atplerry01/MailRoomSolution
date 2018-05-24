@@ -14,7 +14,20 @@ namespace MailRoom.Api.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-            //modelBuilder.Entity<State>().HasMany(t => t.Customers).WithRequired(a=>a.State).WillCascadeOnDelete(false);
+            //modelBuilder.Entity<JobManifestBranch>().HasMany(t => t.JobManifestLogs).WithMany(a=>a.).WillCascadeOnDelete(false);
+
+            // modelBuilder.Entity<JobManifestLog>()
+            //     .HasKey(bc => new { bc.JobManifestId, bc.JobManifestBranchId });
+
+            // modelBuilder.Entity<JobManifestLog>()
+            //         .HasOne(bc => bc.JobManifest)
+            //         .WithMany(b => b.JobManifestLogs)
+            //         .HasForeignKey(bc => bc.JobManifestId);
+
+            // modelBuilder.Entity<JobManifestLog>()
+            //         .HasOne(bc => bc.JobManifestBranch)
+            //         .WithMany(c => c.JobManifestLogs)
+            //         .HasForeignKey(bc => bc.JobManifestBranchId);
 
             base.OnModelCreating(modelBuilder);
         }
@@ -27,7 +40,7 @@ namespace MailRoom.Api.Persistence
         public DbSet<JobData> Jobdatas { get; set; }
         public DbSet<JobManifest> JobManifests { get; set; }
         public DbSet<JobManifestBranch> JobManifestBranches { get; set; }
-        public DbSet<JobManifestLog> JobManifestLogs { get; set; }
+        //public DbSet<JobManifestLog> JobManifestLogs { get; set; }
 
     }
 }

@@ -18,10 +18,8 @@ namespace MailRoom.Api.Models
         public int JobManifestId { get; set; }
         public int JobManifestBranchId { get; set; }
 
-        // [ForeignKey("JobManifestId")]
-        // public JobManifest JobManifest { get; set; }
 
-        [ForeignKey("JobManifestBranchId")]
+        public JobManifest JobManifest { get; set; }
         public JobManifestBranch JobManifestBranch { get; set; }
         
     }

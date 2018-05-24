@@ -12,18 +12,15 @@ namespace MailRoom.Api.Models
         public int JobManifestId { get; set; }
         
 
-        [ForeignKey("ClientBranchId")]
         public ClientBranch ClientBranch { get; set; }
-
-        [ForeignKey("JobManifestId")]
         public JobManifest JobManifest { get; set; }
 
 
-        public ICollection<JobManifestLog> JobManifestLogs { get; set; }
-        public JobManifestBranch()
-        {
-            JobManifestLogs = new Collection<JobManifestLog>();
-        }
+        // public ICollection<JobManifestLog> JobManifestLogs { get; set; }
+        // public JobManifestBranch()
+        // {
+        //     JobManifestLogs = new Collection<JobManifestLog>();
+        // }
 
     }
 }

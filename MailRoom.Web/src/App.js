@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
 import logo from './logo.svg';
+import logo2 from './note.png';
+
 import './App.css';
 
 class App extends Component {
@@ -53,11 +55,11 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <img src={logo2} className="App-logo" alt="logo" />
+          <h1 className="App-title">SecureID eWay-Bill</h1>
         </header>
         <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
+          {/*To get started, edit <code>src/App.js</code> and save to reload.*/}
         </p>
 
         <div className="File-intro">
