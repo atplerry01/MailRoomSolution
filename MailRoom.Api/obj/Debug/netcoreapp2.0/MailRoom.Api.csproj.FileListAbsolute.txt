@@ -1,0 +1,11 @@
+C:\Dev\VSCode\MailRoomSolution\MailRoom.Api\bin\Debug\netcoreapp2.0\MailRoom.Api.deps.json
+C:\Dev\VSCode\MailRoomSolution\MailRoom.Api\bin\Debug\netcoreapp2.0\MailRoom.Api.runtimeconfig.json
+C:\Dev\VSCode\MailRoomSolution\MailRoom.Api\bin\Debug\netcoreapp2.0\MailRoom.Api.runtimeconfig.dev.json
+C:\Dev\VSCode\MailRoomSolution\MailRoom.Api\bin\Debug\netcoreapp2.0\MailRoom.Api.dll
+C:\Dev\VSCode\MailRoomSolution\MailRoom.Api\bin\Debug\netcoreapp2.0\MailRoom.Api.pdb
+C:\Dev\VSCode\MailRoomSolution\MailRoom.Api\obj\Debug\netcoreapp2.0\MailRoom.Api.csprojResolveAssemblyReference.cache
+C:\Dev\VSCode\MailRoomSolution\MailRoom.Api\obj\Debug\netcoreapp2.0\MailRoom.Api.csproj.CoreCompileInputs.cache
+C:\Dev\VSCode\MailRoomSolution\MailRoom.Api\obj\Debug\netcoreapp2.0\MailRoom.Api.AssemblyInfoInputs.cache
+C:\Dev\VSCode\MailRoomSolution\MailRoom.Api\obj\Debug\netcoreapp2.0\MailRoom.Api.AssemblyInfo.cs
+C:\Dev\VSCode\MailRoomSolution\MailRoom.Api\obj\Debug\netcoreapp2.0\MailRoom.Api.dll
+C:\Dev\VSCode\MailRoomSolution\MailRoom.Api\obj\Debug\netcoreapp2.0\MailRoom.Api.pdb
