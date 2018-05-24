@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MailRoom.Api.Models
 {
-    public class JobBranchManifest
+    public class JobManifestLog
     {
         public int Id { get; set; }
         public string SN { get; set; }
@@ -15,10 +15,10 @@ namespace MailRoom.Api.Models
         public string AccountNumber { get; set; }
         public string FileName { get; set; }
         
-        public int JobManifestId { get; set; }
+        public int JobManifestBranchId { get; set; }
 
-        [ForeignKey("JobManifestId")]
-        public JobManifest JobManifest { get; set; }
-
+        [ForeignKey("JobManifestBranchId")]
+        public JobManifestBranch JobManifestBranch { get; set; }
+        
     }
 }

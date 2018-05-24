@@ -43,7 +43,7 @@ namespace MailRoom.Api.Controllers
             //Execute a loop over the rows.
             foreach (string row in csvData.Split('\n'))
             {
-                if (!string.IsNullOrEmpty(row) && row.Split(',')[0] != "SN")
+                if (!string.IsNullOrEmpty(row))
                 {
                     // get brachId
                     var sn = row.Split(',')[0];
@@ -55,8 +55,6 @@ namespace MailRoom.Api.Controllers
                     var custNumber= row.Split(',')[6];
                     var accNumber = row.Split(',')[7];
                     var fName = row.Split(',')[8];
-
-                    //var branch = context.ClientBranches.FirstOrDefault(b => b.BranchCode == brCode);
 
                     JobData jobData = new JobData()
                     {
@@ -81,7 +79,12 @@ namespace MailRoom.Api.Controllers
             //Process the Database Data
             // get distinct BranchCode
             var selectedBranchCode = context.Jobdatas.Select(b => b.BranchCode).Distinct();
-            var test = "";
+
+            // Iterate thru the branchCode
+            // Create the JobManifest
+            // Create the BranchManifest
+            // Create the ManifestLog
+
             return Ok();
         }
 
