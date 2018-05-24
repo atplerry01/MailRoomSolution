@@ -158,6 +158,8 @@ namespace MailRoom.Api.Migrations
 
                     b.Property<string>("FileName");
 
+                    b.Property<string>("JobId");
+
                     b.Property<string>("Name");
 
                     b.Property<string>("Pan");
@@ -188,13 +190,19 @@ namespace MailRoom.Api.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("ClientBranchId");
+
+                    b.Property<int>("DataQuantity");
+
                     b.Property<int>("JobManifestId");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ClientBranchId");
+
                     b.HasIndex("JobManifestId");
 
-                    b.ToTable("JobManifestBranch");
+                    b.ToTable("JobManifestBranches");
                 });
 
             modelBuilder.Entity("MailRoom.Api.Models.JobManifestLog", b =>
@@ -216,6 +224,8 @@ namespace MailRoom.Api.Migrations
 
                     b.Property<int>("JobManifestBranchId");
 
+                    b.Property<int>("JobManifestId");
+
                     b.Property<string>("Name");
 
                     b.Property<string>("Pan");
@@ -226,7 +236,7 @@ namespace MailRoom.Api.Migrations
 
                     b.HasIndex("JobManifestBranchId");
 
-                    b.ToTable("JobManifestLog");
+                    b.ToTable("JobManifestLogs");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -363,6 +373,11 @@ namespace MailRoom.Api.Migrations
 
             modelBuilder.Entity("MailRoom.Api.Models.JobManifestBranch", b =>
                 {
+                    b.HasOne("MailRoom.Api.Models.ClientBranch", "ClientBranch")
+                        .WithMany()
+                        .HasForeignKey("ClientBranchId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("MailRoom.Api.Models.JobManifest", "JobManifest")
                         .WithMany("JobManifestBranchs")
                         .HasForeignKey("JobManifestId")

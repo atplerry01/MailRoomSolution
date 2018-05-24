@@ -14,6 +14,8 @@ namespace MailRoom.Api.Models
         public string CustodianNumber { get; set; }
         public string AccountNumber { get; set; }
         public string FileName { get; set; }
+
+        public string JobId { get; set; }
         
         // public int ClientBranchId { get; set; }
 

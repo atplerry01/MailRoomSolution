@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace MailRoom.Api.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -91,7 +91,8 @@ namespace MailRoom.Api.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true)
+                    JobId = table.Column<string>(nullable: true),
+                    WayBillNumber = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -266,6 +267,62 @@ namespace MailRoom.Api.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "JobManifestBranches",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ClientBranchId = table.Column<int>(nullable: false),
+                    DataQuantity = table.Column<int>(nullable: false),
+                    JobManifestId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobManifestBranches", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_JobManifestBranches_ClientBranches_ClientBranchId",
+                        column: x => x.ClientBranchId,
+                        principalTable: "ClientBranches",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_JobManifestBranches_JobManifests_JobManifestId",
+                        column: x => x.JobManifestId,
+                        principalTable: "JobManifests",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "JobManifestLogs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AccountNumber = table.Column<string>(nullable: true),
+                    BranchCode = table.Column<string>(nullable: true),
+                    BranchName = table.Column<string>(nullable: true),
+                    CustodianName = table.Column<string>(nullable: true),
+                    CustodianNumber = table.Column<string>(nullable: true),
+                    FileName = table.Column<string>(nullable: true),
+                    JobManifestBranchId = table.Column<int>(nullable: false),
+                    JobManifestId = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Pan = table.Column<string>(nullable: true),
+                    SN = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobManifestLogs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_JobManifestLogs_JobManifestBranches_JobManifestBranchId",
+                        column: x => x.JobManifestBranchId,
+                        principalTable: "JobManifestBranches",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -319,6 +376,21 @@ namespace MailRoom.Api.Migrations
                 name: "IX_ClientHeadQuarters_ClientId",
                 table: "ClientHeadQuarters",
                 column: "ClientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobManifestBranches_ClientBranchId",
+                table: "JobManifestBranches",
+                column: "ClientBranchId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobManifestBranches_JobManifestId",
+                table: "JobManifestBranches",
+                column: "JobManifestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobManifestLogs_JobManifestBranchId",
+                table: "JobManifestLogs",
+                column: "JobManifestBranchId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -348,7 +420,7 @@ namespace MailRoom.Api.Migrations
                 name: "Jobdatas");
 
             migrationBuilder.DropTable(
-                name: "JobManifests");
+                name: "JobManifestLogs");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -357,7 +429,13 @@ namespace MailRoom.Api.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
+                name: "JobManifestBranches");
+
+            migrationBuilder.DropTable(
                 name: "ClientBranches");
+
+            migrationBuilder.DropTable(
+                name: "JobManifests");
 
             migrationBuilder.DropTable(
                 name: "Clients");

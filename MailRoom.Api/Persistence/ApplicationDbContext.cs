@@ -26,6 +26,8 @@ namespace MailRoom.Api.Persistence
         public DbSet<ClientHeadQuarter> ClientHeadQuarters { get; set; }
         public DbSet<JobData> Jobdatas { get; set; }
         public DbSet<JobManifest> JobManifests { get; set; }
+        public DbSet<JobManifestBranch> JobManifestBranches { get; set; }
+        public DbSet<JobManifestLog> JobManifestLogs { get; set; }
 
     }
 }
