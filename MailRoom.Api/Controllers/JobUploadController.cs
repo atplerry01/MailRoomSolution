@@ -43,18 +43,18 @@ namespace MailRoom.Api.Controllers
             //Execute a loop over the rows.
             foreach (string row in csvData.Split('\n'))
             {
-                if (!string.IsNullOrEmpty(row))
+                if (!string.IsNullOrEmpty(row) && row.Split(',')[0] != "SN")
                 {
                     // get brachId
-                    var sn = row.Split(';')[0];
-                    var name = row.Split(';')[0];
-                    var pan = row.Split(';')[0];
-                    var brCode = row.Split(';')[0];
-                    var brName = row.Split(';')[0];
-                    var custName = row.Split(';')[0];
-                    var custNumber= row.Split(';')[0];
-                    var accNumber = row.Split(';')[0];
-                    var fName = row.Split(';')[0];
+                    var sn = row.Split(',')[0];
+                    var name = row.Split(',')[1];
+                    var pan = row.Split(',')[2];
+                    var brCode = row.Split(',')[3];
+                    var brName = row.Split(',')[4];
+                    var custName = row.Split(',')[5];
+                    var custNumber= row.Split(',')[6];
+                    var accNumber = row.Split(',')[7];
+                    var fName = row.Split(',')[8];
 
                     //var branch = context.ClientBranches.FirstOrDefault(b => b.BranchCode == brCode);
 
@@ -74,10 +74,14 @@ namespace MailRoom.Api.Controllers
                     context.Jobdatas.Add(jobData);
 
                 }
-
-                await context.SaveChangesAsync();
             }
 
+            await context.SaveChangesAsync();
+
+            //Process the Database Data
+            // get distinct BranchCode
+            var selectedBranchCode = context.Jobdatas.Select(b => b.BranchCode).Distinct();
+            var test = "";
             return Ok();
         }
 

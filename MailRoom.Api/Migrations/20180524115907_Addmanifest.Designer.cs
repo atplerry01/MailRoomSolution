@@ -11,8 +11,8 @@ using System;
 namespace MailRoom.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180524101403_AddJobDataUpdate1")]
-    partial class AddJobDataUpdate1
+    [Migration("20180524115907_Addmanifest")]
+    partial class Addmanifest
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -142,18 +142,62 @@ namespace MailRoom.Api.Migrations
                     b.ToTable("ClientHeadQuarters");
                 });
 
+            modelBuilder.Entity("MailRoom.Api.Models.JobBranchManifest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AccountNumber");
+
+                    b.Property<string>("BranchCode");
+
+                    b.Property<string>("BranchName");
+
+                    b.Property<string>("CustodianName");
+
+                    b.Property<string>("CustodianNumber");
+
+                    b.Property<string>("FileName");
+
+                    b.Property<int>("JobManifestId");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Pan");
+
+                    b.Property<string>("SN");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobManifestId");
+
+                    b.ToTable("JobBranchManifest");
+                });
+
             modelBuilder.Entity("MailRoom.Api.Models.JobData", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("ClientBranchId");
+                    b.Property<string>("AccountNumber");
+
+                    b.Property<string>("BranchCode");
+
+                    b.Property<string>("BranchName");
+
+                    b.Property<string>("CustodianName");
+
+                    b.Property<string>("CustodianNumber");
+
+                    b.Property<string>("FileName");
 
                     b.Property<string>("Name");
 
-                    b.HasKey("Id");
+                    b.Property<string>("Pan");
 
-                    b.HasIndex("ClientBranchId");
+                    b.Property<string>("SN");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Jobdatas");
                 });
@@ -163,7 +207,9 @@ namespace MailRoom.Api.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("BranchCode");
+
+                    b.Property<string>("WayBillNumber");
 
                     b.HasKey("Id");
 
@@ -302,11 +348,11 @@ namespace MailRoom.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("MailRoom.Api.Models.JobData", b =>
+            modelBuilder.Entity("MailRoom.Api.Models.JobBranchManifest", b =>
                 {
-                    b.HasOne("MailRoom.Api.Models.ClientBranch", "ClientBranch")
-                        .WithMany()
-                        .HasForeignKey("ClientBranchId")
+                    b.HasOne("MailRoom.Api.Models.JobManifest", "JobManifest")
+                        .WithMany("JobBranchManifests")
+                        .HasForeignKey("JobManifestId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

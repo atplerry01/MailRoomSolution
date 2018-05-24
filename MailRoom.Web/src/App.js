@@ -31,12 +31,12 @@ class App extends Component {
     const config = {
       headers: {
         'content-type': 'multipart/form-data'
-      }
+      },
+      acceptedFiles: 'text/csv',
     }
 
-    return axios.post(url, formData, {
-      headers: { 'content-type': 'multipart/form-data' },
-    }).then(response => {
+    return axios.post(url, formData, config)
+    .then(response => {
       const data = response.data;
       const fileURL = data.secure_url // You should store this URL for future references in your app
       console.log(response);
@@ -66,7 +66,7 @@ class App extends Component {
               <Dropzone
                 onDrop={this.onImageDrop.bind(this)}
                 multiple={false}
-                accept="text/*,">
+                >
                 <div>Drop an image or click to select a file to upload.</div>
               </Dropzone>
             </div>

@@ -11,8 +11,8 @@ using System;
 namespace MailRoom.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180524101227_AddJobData")]
-    partial class AddJobData
+    [Migration("20180524112927_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -147,7 +147,23 @@ namespace MailRoom.Api.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("AccountNumber");
+
+                    b.Property<string>("BranchCode");
+
+                    b.Property<string>("BranchName");
+
+                    b.Property<string>("CustodianName");
+
+                    b.Property<string>("CustodianNumber");
+
+                    b.Property<string>("FileName");
+
                     b.Property<string>("Name");
+
+                    b.Property<string>("Pan");
+
+                    b.Property<string>("SN");
 
                     b.HasKey("Id");
 

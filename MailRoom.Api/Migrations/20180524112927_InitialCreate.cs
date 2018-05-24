@@ -65,6 +65,27 @@ namespace MailRoom.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Jobdatas",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AccountNumber = table.Column<string>(nullable: true),
+                    BranchCode = table.Column<string>(nullable: true),
+                    BranchName = table.Column<string>(nullable: true),
+                    CustodianName = table.Column<string>(nullable: true),
+                    CustodianNumber = table.Column<string>(nullable: true),
+                    FileName = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    Pan = table.Column<string>(nullable: true),
+                    SN = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Jobdatas", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "JobManifests",
                 columns: table => new
                 {
@@ -322,6 +343,9 @@ namespace MailRoom.Api.Migrations
 
             migrationBuilder.DropTable(
                 name: "ClientHeadQuarters");
+
+            migrationBuilder.DropTable(
+                name: "Jobdatas");
 
             migrationBuilder.DropTable(
                 name: "JobManifests");
