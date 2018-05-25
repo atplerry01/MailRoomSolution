@@ -2,11 +2,14 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using MailRoom.Api.Models;
 using MailRoom.Api.Persistence;
+using MailRoom.Api.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace MailRoom.Api.Controllers
 {
@@ -15,8 +18,10 @@ namespace MailRoom.Api.Controllers
     {
         private readonly IHostingEnvironment host;
         private readonly ApplicationDbContext context;
-        public JobUploadController(ApplicationDbContext context, IHostingEnvironment host)
+        private readonly IMapper mapper;
+        public JobUploadController(ApplicationDbContext context, IMapper mapper, IHostingEnvironment host)
         {
+            this.mapper = mapper;
             this.context = context;
             this.host = host;
         }
@@ -147,7 +152,7 @@ namespace MailRoom.Api.Controllers
 
             // Delete the JobData
             #region DeleteJobData
-            
+
             var fileJobDatas = context.Jobdatas.Where(j => j.JobId == file.FileName);
 
             foreach (var job in fileJobDatas)
@@ -158,7 +163,17 @@ namespace MailRoom.Api.Controllers
             await context.SaveChangesAsync();
             #endregion
 
-            return Ok();
+            //Geth the manifest for the doc
+            var completedManifest = await context.JobManifests
+                 .Include(m => m.JobManifestBranchs)
+                .Include(l => l.JobManifestLogs)
+                .SingleOrDefaultAsync(it => it.Id == jobManifest.Id);
+
+            if (jobManifest == null) return NotFound();
+
+            var jobManifestResource = mapper.Map<JobManifest, JobManifestResource>(completedManifest);
+            
+            return Ok(jobManifestResource);
         }
     }
 }

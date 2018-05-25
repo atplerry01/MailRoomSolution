@@ -21,7 +21,7 @@ namespace MailRoom.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<JobManifestResource>> GetIssueTrackers()
+        public async Task<IEnumerable<JobManifestResource>> GetJobManifests()
         {
             var jobManifests = await context.JobManifests
                 .Include(m => m.JobManifestBranchs)
@@ -31,7 +31,7 @@ namespace MailRoom.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetIssueTracker(int id)
+        public async Task<IActionResult> GetJobManifest(int id)
         {
             var jobManifest = await context.JobManifests
                  .Include(m => m.JobManifestBranchs)
