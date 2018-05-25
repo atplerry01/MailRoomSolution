@@ -70,7 +70,7 @@ namespace MailRoom.Api.Controllers
                         CustodianNumber = custNumber,
                         AccountNumber = accNumber,
                         FileName = fName,
-                        JobId = fileName
+                        JobId = file.FileName //fileName
                     };
 
                     context.Jobdatas.Add(jobData);
@@ -87,7 +87,7 @@ namespace MailRoom.Api.Controllers
             JobManifest jobManifest = new JobManifest()
             {
                 WayBillNumber = fileName,
-                JobId = file.Name
+                JobId = file.FileName
             };
 
             context.JobManifests.Add(jobManifest);
@@ -147,7 +147,8 @@ namespace MailRoom.Api.Controllers
 
             // Delete the JobData
             #region DeleteJobData
-            var fileJobDatas = context.Jobdatas.Where(j => j.JobId == fileName);
+            
+            var fileJobDatas = context.Jobdatas.Where(j => j.JobId == file.FileName);
 
             foreach (var job in fileJobDatas)
             {
@@ -157,10 +158,7 @@ namespace MailRoom.Api.Controllers
             await context.SaveChangesAsync();
             #endregion
 
-
-
             return Ok();
         }
-
     }
 }
