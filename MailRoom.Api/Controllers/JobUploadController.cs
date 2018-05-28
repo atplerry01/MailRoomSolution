@@ -75,7 +75,7 @@ namespace MailRoom.Api.Controllers
                         CustodianNumber = custNumber,
                         AccountNumber = accNumber,
                         FileName = fName,
-                        JobId = file.FileName //fileName
+                        JobId = file.FileName
                     };
 
                     context.Jobdatas.Add(jobData);

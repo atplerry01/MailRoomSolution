@@ -27,6 +27,7 @@ namespace MailRoom.Api.Controllers
                 .Include(m => m.JobManifestBranchs)
                 .Include(l => l.JobManifestLogs)
                 .ToListAsync();
+                
             return mapper.Map<IEnumerable<JobManifest>, IEnumerable<JobManifestResource>>(jobManifests);
         }
 

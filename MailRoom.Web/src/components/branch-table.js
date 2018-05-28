@@ -32,7 +32,7 @@ class BranchTable extends Component {
         const footer = () => {
             console.log(this.props.branchDetails);
             return (
-                <tr class="table-warning">
+                <tr class="table-primary">
                     <td>JobId: 1234</td>
                     <td>AWB Number: WEATFDGHJJ</td>
                     <td>BRANCH: IKEJA</td>
@@ -60,8 +60,6 @@ class BranchTable extends Component {
                     <tbody>
                         {list()}
                     </tbody>
-
-                    
                 </table>
                 <table className="table table-striped table-sm">
                     {footer()}

@@ -3013,6 +3013,20 @@
           }
         }
       },
+      "Sendgrid/9.5.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Abstractions": "1.1.0",
+          "NETStandard.Library": "1.6.1",
+          "Newtonsoft.Json": "9.0.1"
+        },
+        "compile": {
+          "lib/netstandard1.3/SendGrid.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/SendGrid.dll": {}
+        }
+      },
       "SQLitePCLRaw.bundle_green/1.1.7": {
         "type": "package",
         "dependencies": {
@@ -7904,6 +7918,21 @@
         "version.txt"
       ]
     },
+    "Sendgrid/9.5.0": {
+      "sha512": "rqJ74MvWG1h66h6VJoOkadIMlhavcGJCC9RcO5X0r+4fpYNuMrHJ/RLQhZUH7jimDgwj417tT+j/kyEXYI2ZSw==",
+      "type": "package",
+      "path": "sendgrid/9.5.0",
+      "files": [
+        "lib/net452/SendGrid.dll",
+        "lib/net452/SendGrid.pdb",
+        "lib/net452/SendGrid.xml",
+        "lib/netstandard1.3/SendGrid.dll",
+        "lib/netstandard1.3/SendGrid.pdb",
+        "lib/netstandard1.3/SendGrid.xml",
+        "sendgrid.9.5.0.nupkg.sha512",
+        "sendgrid.nuspec"
+      ]
+    },
     "SQLitePCLRaw.bundle_green/1.1.7": {
       "sha512": "Kw+n4CUhQ8S4YAPmpRUldO8S7c4LU7HHukJF0v5Sfggf8Ia9YVdIh0dYkMvKvS+DTX+OBORSMqPM0CGfAzFtVA==",
       "type": "package",
@@ -12603,7 +12632,8 @@
       "Microsoft.AspNetCore.Cors >= 2.0.2",
       "Microsoft.EntityFrameworkCore.Design >= 2.0.2",
       "Microsoft.EntityFrameworkCore.SqlServer >= 2.0.2",
-      "Microsoft.NETCore.App >= 2.0.0"
+      "Microsoft.NETCore.App >= 2.0.0",
+      "SendGrid >= 9.5.0"
     ]
   },
   "packageFolders": {
@@ -12673,6 +12703,10 @@
             "target": "Package",
             "version": "[2.0.0, )",
             "autoReferenced": true
+          },
+          "SendGrid": {
+            "target": "Package",
+            "version": "[9.5.0, )"
           }
         },
         "imports": [
