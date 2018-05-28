@@ -39,6 +39,24 @@
           "lib/netstandard1.6/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
         }
       },
+      "DinkToPdf/1.0.8": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.0",
+          "System.Collections.Concurrent": "4.3.0",
+          "System.Globalization": "4.3.0",
+          "System.Reflection.TypeExtensions": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.InteropServices": "4.3.0",
+          "System.Threading.Thread": "4.0.0"
+        },
+        "compile": {
+          "lib/netstandard1.6/DinkToPdf.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.6/DinkToPdf.dll": {}
+        }
+      },
       "Libuv/1.10.0": {
         "type": "package",
         "dependencies": {
@@ -4828,6 +4846,18 @@
         "lib/net451/AutoMapper.Extensions.Microsoft.DependencyInjection.dll",
         "lib/netstandard1.1/AutoMapper.Extensions.Microsoft.DependencyInjection.dll",
         "lib/netstandard1.6/AutoMapper.Extensions.Microsoft.DependencyInjection.dll"
+      ]
+    },
+    "DinkToPdf/1.0.8": {
+      "sha512": "wJDlcNXjQ+OnBFwh3LBeAXgrXqlKl0RsgN60XpxEFbyqzdaG9ASb5HTXQjXQPaBguSCOrGZZESPnpcng34TEkw==",
+      "type": "package",
+      "path": "dinktopdf/1.0.8",
+      "files": [
+        "dinktopdf.1.0.8.nupkg.sha512",
+        "dinktopdf.nuspec",
+        "lib/netstandard1.6/DinkToPdf.dll",
+        "lib/netstandard1.6/DinkToPdf.pdb",
+        "lib/netstandard1.6/DinkToPdf.xml"
       ]
     },
     "Libuv/1.10.0": {
@@ -12628,6 +12658,7 @@
     ".NETCoreApp,Version=v2.0": [
       "AutoMapper >= 6.2.2",
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 1.2.0",
+      "DinkToPdf >= 1.0.8",
       "Microsoft.AspNetCore.All >= 2.0.6",
       "Microsoft.AspNetCore.Cors >= 2.0.2",
       "Microsoft.EntityFrameworkCore.Design >= 2.0.2",
@@ -12682,6 +12713,10 @@
           "AutoMapper.Extensions.Microsoft.DependencyInjection": {
             "target": "Package",
             "version": "[1.2.0, )"
+          },
+          "DinkToPdf": {
+            "target": "Package",
+            "version": "[1.0.8, )"
           },
           "Microsoft.AspNetCore.All": {
             "target": "Package",

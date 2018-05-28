@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.0",
-    "signature": "a819e89d657a52ad06b429ded6e5c966a696872d"
+    "signature": "640310fe08858dbe7880db2c85f724a6f53f8567"
   },
   "compilationOptions": {
     "defines": [
@@ -25,6 +25,7 @@
         "dependencies": {
           "AutoMapper": "6.2.2",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "1.2.0",
+          "DinkToPdf": "1.0.8",
           "Microsoft.AspNetCore.All": "2.0.6",
           "Microsoft.AspNetCore.Cors": "2.0.2",
           "Microsoft.EntityFrameworkCore.Design": "2.0.2",
@@ -72,6 +73,23 @@
         },
         "compile": {
           "lib/netstandard1.6/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
+        }
+      },
+      "DinkToPdf/1.0.8": {
+        "dependencies": {
+          "NETStandard.Library": "2.0.0",
+          "System.Collections.Concurrent": "4.3.0",
+          "System.Globalization": "4.3.0",
+          "System.Reflection.TypeExtensions": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.InteropServices": "4.3.0",
+          "System.Threading.Thread": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.6/DinkToPdf.dll": {}
+        },
+        "compile": {
+          "lib/netstandard1.6/DinkToPdf.dll": {}
         }
       },
       "Libuv/1.10.0": {
@@ -4045,6 +4063,13 @@
       "sha512": "sha512-pSWmuxqlE6aZNSljcEC0hXEGHrswi2ukYGDiypcBNYMLaOwPxpp4LmT9z9Eqb3EDweC1S9uRSLQPiuSRhwxVow==",
       "path": "automapper.extensions.microsoft.dependencyinjection/1.2.0",
       "hashPath": "automapper.extensions.microsoft.dependencyinjection.1.2.0.nupkg.sha512"
+    },
+    "DinkToPdf/1.0.8": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-wJDlcNXjQ+OnBFwh3LBeAXgrXqlKl0RsgN60XpxEFbyqzdaG9ASb5HTXQjXQPaBguSCOrGZZESPnpcng34TEkw==",
+      "path": "dinktopdf/1.0.8",
+      "hashPath": "dinktopdf.1.0.8.nupkg.sha512"
     },
     "Libuv/1.10.0": {
       "type": "package",
