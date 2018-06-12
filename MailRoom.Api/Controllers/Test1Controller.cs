@@ -12,9 +12,13 @@ namespace MailRoom.Api.Controllers
     [Route("api/test")]
     public class Test1Controller : Controller
     {
+        private readonly HttpClient client;
 
-        static HttpClient client = new HttpClient();
+        public Test1Controller(HttpClient client)
+        {
+            this.client = client;
 
+        }
 
         [HttpPost]
         public async Task<IActionResult> Create(string city)
@@ -106,70 +110,39 @@ namespace MailRoom.Api.Controllers
                 }
             };
 
+            string returnData;
             string postData = JsonConvert.SerializeObject(rootObject);
-
-            client.BaseAddress = new Uri("https://wsbexpress.dhl.com/");
             client.DefaultRequestHeaders.Accept.Clear();
 
             string _ContentType = "application/json";
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(_ContentType));
-
-            client.DefaultRequestHeaders.Authorization =
-                new AuthenticationHeaderValue("Basic", Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(string.Format("{0}:{1}", "secureidl", "T!9tS$4uB!6z"))));
-
-            // try
-            // {
-
-
-            // } catch(Exception ex) {
-            //     Console.WriteLine(ex.Message);
-            //     return Ok(ex);
-            // }
-
-            // string newData = JsonConvert.SerializeObject(rootObject); 
-
             var dataAsString = JsonConvert.SerializeObject(rootObject);
             var content = new StringContent(dataAsString);
             content.Headers.ContentType = new MediaTypeHeaderValue(_ContentType);
+
             HttpResponseMessage response = await client.PostAsync("rest/sndpt/ShipmentRequest", content);
-
-            HttpContent _Body = new StringContent(dataAsString);
-            _Body.Headers.ContentType = new MediaTypeHeaderValue(_ContentType);
-            HttpResponseMessage response2 = client.PostAsync("rest/sndpt/ShipmentRequest", _Body).Result;
-
-            string res;
 
             if (response.IsSuccessStatusCode)
             {
-
-                using (HttpContent cont = response2.Content)
+                using (HttpContent cont = response.Content)
                 {
                     Task<string> result = cont.ReadAsStringAsync();
-                    res = result.Result;
-                    Console.WriteLine(res);
-                    return Ok(res);
+                    returnData = result.Result;
+
+                    // process the json to get the waybill
+                    var waybill = JsonConvert.DeserializeObject<RootResponse>(returnData);
+                    var newWayBill = waybill.ShipmentResponse.ShipmentIdentificationNumber;
+                    var trackerNumber = waybill.ShipmentResponse.PackagesResult.PackageResult[0].TrackingNumber;
+                    ReBuildModel(newWayBill, trackerNumber);
+                    return Ok(waybill);
                 }
-
             }
-
 
             return Ok();
         }
 
-        // public async Task<Uri> CreateProductAsync(RootObject rootObject)
-        // {
-        //     var dataAsString = JsonConvert.SerializeObject(rootObject);
-        //     var content = new StringContent(dataAsString);
-        //     HttpResponseMessage response = await client.PostAsync(
-        //         "rest/sndpt/ShipmentRequest", content);
-        //     response.EnsureSuccessStatusCode();
-
-        //     // return URI of the created resource.
-        //     return response.Headers.Location;
-        // }
-
-
-
+        public void ReBuildModel(int waybill, string tracker) {
+            Console.WriteLine(tracker);
+            Console.WriteLine(waybill);
+        }
     }
-
 }

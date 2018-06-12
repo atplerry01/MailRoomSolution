@@ -36,7 +36,7 @@ namespace MailRoom.Api.Models
         public int ShipmentIdentificationNumber { get; set; }
     }
 
-    public class Example
+    public class RootResponse
     {
         public ShipmentResponse ShipmentResponse { get; set; }
     }
