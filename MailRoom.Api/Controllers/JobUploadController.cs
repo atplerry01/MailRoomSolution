@@ -62,7 +62,7 @@ namespace MailRoom.Api.Controllers
                     var custName = row.Split(',')[5];
                     var custNumber = row.Split(',')[6];
                     var accNumber = row.Split(',')[7];
-                    var fName = row.Split(',')[8];
+                    var fName = row.Split(',')[7];
 
                     JobData jobData = new JobData()
                     {

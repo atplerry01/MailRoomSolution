@@ -12989,11 +12989,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Development\\SecureID\\VSCode\\MailRoomSolutionV1\\MailRoomSolution\\MailRoom.Api\\MailRoom.Api.csproj",
+      "projectUniqueName": "C:\\Development\\SecureID\\VSCode\\MailRoomSolutionV1\\MailRoomSolution\\MailRoom.Api\\MailRoom.Api.csproj",
       "projectName": "MailRoom.Api",
-      "projectPath": "c:\\Development\\SecureID\\VSCode\\MailRoomSolutionV1\\MailRoomSolution\\MailRoom.Api\\MailRoom.Api.csproj",
+      "projectPath": "C:\\Development\\SecureID\\VSCode\\MailRoomSolutionV1\\MailRoomSolution\\MailRoom.Api\\MailRoom.Api.csproj",
       "packagesPath": "C:\\Users\\lakinsanya\\.nuget\\packages\\",
-      "outputPath": "c:\\Development\\SecureID\\VSCode\\MailRoomSolutionV1\\MailRoomSolution\\MailRoom.Api\\obj\\",
+      "outputPath": "C:\\Development\\SecureID\\VSCode\\MailRoomSolutionV1\\MailRoomSolution\\MailRoom.Api\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

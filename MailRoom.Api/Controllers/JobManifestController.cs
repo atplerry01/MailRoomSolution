@@ -24,8 +24,8 @@ namespace MailRoom.Api.Controllers
         public async Task<IEnumerable<JobManifestResource>> GetJobManifests()
         {
             var jobManifests = await context.JobManifests
-                .Include(m => m.JobManifestBranchs)
-                .Include(l => l.JobManifestLogs)
+                //.Include(m => m.JobManifestBranchs)
+                //.Include(l => l.JobManifestLogs)
                 .ToListAsync();
                 
             return mapper.Map<IEnumerable<JobManifest>, IEnumerable<JobManifestResource>>(jobManifests);
@@ -35,8 +35,8 @@ namespace MailRoom.Api.Controllers
         public async Task<IActionResult> GetJobManifest(int id)
         {
             var jobManifest = await context.JobManifests
-                 .Include(m => m.JobManifestBranchs)
-                .Include(l => l.JobManifestLogs)
+                //.Include(m => m.JobManifestBranchs)
+                //.Include(l => l.JobManifestLogs)
                 .SingleOrDefaultAsync(it => it.Id == id);
 
             if (jobManifest == null) return NotFound();
