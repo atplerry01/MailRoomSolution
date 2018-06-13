@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using DinkToPdf;
+using DinkToPdf.Contracts;
 using MailRoom.Api.Models;
 using MailRoom.Api.Persistence;
 using Microsoft.AspNetCore.Builder;
@@ -32,6 +34,8 @@ namespace MailRoom.Api
             services.AddAutoMapper();
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
 
+            services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
+            
             #region IentityRegion
             // add identity
             var builder = services.AddIdentityCore<ApplicationUser>(o =>

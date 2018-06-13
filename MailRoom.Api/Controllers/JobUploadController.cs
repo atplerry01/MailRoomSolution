@@ -2,11 +2,14 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using MailRoom.Api.Models;
 using MailRoom.Api.Persistence;
+using MailRoom.Api.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace MailRoom.Api.Controllers
 {
@@ -15,8 +18,10 @@ namespace MailRoom.Api.Controllers
     {
         private readonly IHostingEnvironment host;
         private readonly ApplicationDbContext context;
-        public JobUploadController(ApplicationDbContext context, IHostingEnvironment host)
+        private readonly IMapper mapper;
+        public JobUploadController(ApplicationDbContext context, IMapper mapper, IHostingEnvironment host)
         {
+            this.mapper = mapper;
             this.context = context;
             this.host = host;
         }
@@ -40,40 +45,135 @@ namespace MailRoom.Api.Controllers
             //Read the contents of CSV file.
             string csvData = System.IO.File.ReadAllText(filePath);
 
+            // Process JobData
+            #region ProcessJobData
+
             //Execute a loop over the rows.
             foreach (string row in csvData.Split('\n'))
             {
                 if (!string.IsNullOrEmpty(row))
                 {
-
                     // get brachId
-                    var brCode = row.Split(';')[0];
-
-                    var branch = context.ClientBranches.FirstOrDefault(b => b.BranchCode == brCode);
+                    var sn = row.Split(',')[0];
+                    var name = row.Split(',')[1];
+                    var pan = row.Split(',')[2];
+                    var brCode = row.Split(',')[3];
+                    var brName = row.Split(',')[4];
+                    var custName = row.Split(',')[5];
+                    var custNumber = row.Split(',')[6];
+                    var accNumber = row.Split(',')[7];
+                    var fName = row.Split(',')[8];
 
                     JobData jobData = new JobData()
                     {
-                        ClientBranchId = branch.Id
+                        SN = sn,
+                        Name = name,
+                        Pan = pan,
+                        BranchCode = brCode,
+                        BranchName = brName,
+                        CustodianName = custName,
+                        CustodianNumber = custNumber,
+                        AccountNumber = accNumber,
+                        FileName = fName,
+                        JobId = file.FileName
                     };
-                    var col1 = row.Split(';')[0];
-                    var col2 = row.Split(';')[1];
-                    var col3 = row.Split(';')[2];
 
-                    //Build the object data
-
+                    context.Jobdatas.Add(jobData);
                 }
             }
 
+            await context.SaveChangesAsync();
 
+            #endregion
 
-            // //Todo: Creating a thumnail for the file
-            // var photo = new IssueImage { FileName = fileName };
-            // issueTracker.IssueImages.Add(photo);
-            // await context.SaveChangesAsync();
+            //Process the JobManifest Data
+            #region ProcessJobManifest
 
-            // return Ok(mapper.Map<IssueImage, IssueImageResource>(photo));
-            return Ok();
+            JobManifest jobManifest = new JobManifest()
+            {
+                WayBillNumber = fileName,
+                JobId = file.FileName
+            };
+
+            context.JobManifests.Add(jobManifest);
+            await context.SaveChangesAsync();
+
+            // get distinct BranchCode
+            ////////////////////////////
+            var selectedBranchCode = context.Jobdatas.Select(b => b.BranchCode).Distinct();
+
+            // Iterate thru the branchCode
+            foreach (string branch in selectedBranchCode)
+            {
+                //get the count
+                var branchData = context.Jobdatas.Where(b => b.BranchCode == branch);
+                var clientBranch = context.ClientBranches.SingleOrDefault(c => c.BranchCode == branch);
+                var dataCount = branchData.Count();
+
+                if (clientBranch != null)
+                {
+                    //Create Branch Manifest
+                    JobManifestBranch branchManifest = new JobManifestBranch()
+                    {
+                        DataQuantity = dataCount,
+                        JobManifestId = jobManifest.Id,
+                        ClientBranchId = clientBranch.Id
+                    };
+
+                    context.JobManifestBranches.Add(branchManifest);
+                    await context.SaveChangesAsync();
+
+                    // Create the Branch Logs
+                    foreach (var data in branchData)
+                    {
+                        JobManifestLog manifestLog = new JobManifestLog()
+                        {
+                            SN = data.SN,
+                            Name = data.Name,
+                            Pan = data.Pan,
+                            BranchCode = data.BranchCode,
+                            BranchName = data.BranchName,
+                            CustodianName = data.CustodianName,
+                            CustodianNumber = data.CustodianNumber,
+                            AccountNumber = data.AccountNumber,
+                            FileName = data.FileName,
+
+                            JobManifestId = jobManifest.Id,
+                            JobManifestBranchId = branchManifest.Id
+                        };
+
+                        context.JobManifestLogs.Add(manifestLog);
+                    }
+
+                    await context.SaveChangesAsync();
+                }
+            }
+            #endregion
+
+            // Delete the JobData
+            #region DeleteJobData
+
+            var fileJobDatas = context.Jobdatas.Where(j => j.JobId == file.FileName);
+
+            foreach (var job in fileJobDatas)
+            {
+                context.Jobdatas.Remove(job);
+            }
+
+            await context.SaveChangesAsync();
+            #endregion
+
+            //Geth the manifest for the doc
+            var completedManifest = await context.JobManifests
+                 .Include(m => m.JobManifestBranchs)
+                .Include(l => l.JobManifestLogs)
+                .SingleOrDefaultAsync(it => it.Id == jobManifest.Id);
+
+            if (jobManifest == null) return NotFound();
+
+            var jobManifestResource = mapper.Map<JobManifest, JobManifestResource>(completedManifest);
+            
+            return Ok(jobManifestResource);
         }
-
     }
 }

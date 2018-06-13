@@ -1,0 +1,38 @@
+{
+"RateRequest" : {
+"ClientDetails" : null,
+"RequestedShipment" : {
+"DropOffType" : "REQUEST_COURIER",
+"ShipTimestamp" : "2017-09-15T11:00:00GMT+02:00",
+"UnitOfMeasurement" : "SU",
+"Content" : "NON_DOCUMENTS",
+"PaymentInfo" : "DAP",
+"NextBusinessDay" : "Y",
+"Account" : XXXXXXXXX,
+"Ship" : {
+"Shipper" : {
+"City" : "Washington, D.C.",
+"PostalCode" : 20004,
+"CountryCode" : "US"
+},
+"Recipient" : {
+"City" : "canberra",
+"PostalCode" : 2601,
+"CountryCode" : "AU"
+}
+},
+"Packages" : {
+"RequestedPackages" : {
+"@number" : "1",
+"Weight" : {
+"Value" : 8.82
+},
+"Dimensions" : {
+"Length" : 4.33,
+"Width" : 4.33,
+"Height" : 4.33
+}
+}
+}
+}
+}
