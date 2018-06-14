@@ -7,6 +7,7 @@ namespace MailRoom.Api.ViewModels
     {
         public int Id { get; set; }
         public string WayBillNumber { get; set; }
+        public string TrackingNumber { get; set; }
         public string JobId { get; set; }
         
         public ICollection<JobManifestBranchResource> JobManifestBranchs { get; set; }

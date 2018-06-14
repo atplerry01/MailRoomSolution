@@ -1,20 +1,11 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+//import { NavLink } from 'react-router-dom';
 
 class BranchTable extends Component {
-
-    componentDidUpdate() {
-        console.log(this.props);
-    }
-
-    componentWillMount() {
-        console.log(this.props);
-    }
 
     render() {
 
         const list = () => {
-            console.log(this.props.branchDetails.jobManifestLogs);
             return this.props.branchDetails.jobManifestLogs.map((branch, index) => {
                 return (
                     <tr key={branch.id} >
@@ -30,14 +21,15 @@ class BranchTable extends Component {
         }
 
         const footer = () => {
-            console.log(this.props.branchDetails);
+            
             return (
                 <tr class="table-primary">
-                    <td>JobId: 1234</td>
-                    <td>AWB Number: WEATFDGHJJ</td>
-                    <td>BRANCH: IKEJA</td>
-                    <td>Data Number: 100</td>
-                    <td>Custodian</td>
+                    <td>JobId: {this.props.branchDetails.jobId}</td>
+                    <td>AWB Number: {this.props.branchDetails.wayBillNumber}</td>
+                    <td>Tracking Number {this.props.branchDetails.trackingNumber}</td>
+                    <td>BRANCH: {this.props.branchDetails.clientBranch.address}</td>
+                    <td>Data Number: {this.props.branchDetails.dataQuantity}</td>
+                    <td>Custodian: {this.props.branchDetails.clientBranch.contactName} {this.props.branchDetails.clientBranch.contactPhone}</td>
                     <td></td>
                 </tr>
             )

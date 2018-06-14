@@ -11,9 +11,10 @@ using System;
 namespace MailRoom.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180614085111_AddGraphicImage")]
+    partial class AddGraphicImage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,12 +119,6 @@ namespace MailRoom.Api.Migrations
 
                     b.Property<int>("ClientId");
 
-                    b.Property<string>("ContactEmail");
-
-                    b.Property<string>("ContactName");
-
-                    b.Property<string>("ContactPhone");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
@@ -205,8 +200,6 @@ namespace MailRoom.Api.Migrations
                     b.Property<int>("DataQuantity");
 
                     b.Property<string>("GraphicImage");
-
-                    b.Property<string>("JobId");
 
                     b.Property<int>("JobManifestId");
 

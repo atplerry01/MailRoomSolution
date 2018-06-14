@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
-import { Table, Button, Bootstrap, Grid, Row, Col } from 'react-bootstrap';
+import { Button, Grid, Row, Col } from 'react-bootstrap';
 
 import axios from 'axios';
-import logo from './logo.svg';
 import logo2 from './note.png';
 import BranchTable from './components/branch-table';
 
@@ -16,12 +15,10 @@ class App extends Component {
     this.state = {
       uploadedFile: null,
       uploadedFileCloudinaryUrl: '',
-      manifest: ''
+      manifest: '',
+      trackingNumber: '',
+      masterAWB: '',
     };
-  }
-
-  componentWillUpdate() {
-    console.log(this.state.manifest);
   }
 
   onImageDrop(files) {
@@ -33,7 +30,7 @@ class App extends Component {
   onHandleClick = (e, file) => {
     e.preventDefault();
 
-    const url = 'http://localhost:5000/api/jobupload';
+    const url = 'http://localhost:5050/api/jobupload';
     const formData = new FormData();
     formData.append('file', file)
     const config = {
@@ -45,8 +42,6 @@ class App extends Component {
 
     return axios.post(url, formData, config)
       .then(response => {
-        const data = response.data;
-        const fileURL = data.secure_url // You should store this URL for future references in your app
         console.log(response.data);
         this.setState({
           manifest: response.data
@@ -57,17 +52,30 @@ class App extends Component {
       }).catch(function (error) {
         console.log(error);
       });
-
-
-
-    //this.props.handleDelete(value);
   };
 
-  getBranchTableList(branchLists) {
-    console.log(branchLists);
-    // return this.state.manifest.jobManifestBranchs.map((branch, index) => {
-    //   return (<div>Branch</div>)
-    // })
+  onHandleAWBInfo = (e, id) => {
+    e.preventDefault();
+
+    const url = 'http://localhost:5050/api/airwaybill/' + id;
+    console.log(url);
+
+    
+    return axios.post(url)
+      .then(response => {
+        console.log(response);
+        //masterTrackerNumber
+        this.setState({
+          masterAWB: response.data
+        });
+
+        console.log(this.state.masterAWB);
+
+      }).catch(function (error) {
+        console.log(error);
+      });
+
+
   }
 
   getManifestLogs(manifestLogs) {
@@ -77,14 +85,33 @@ class App extends Component {
   }
 
   render() {
+    const manifestTop = () => {
+      if (this.state.masterAWB.trackingNumber) {
+        return (<div>
+          <table className="manifestDetail">
+            <tr>
+              <td><h6><strong>JobId:</strong> {this.state.manifest.jobId}</h6></td>
+             
+            </tr>
+            <tr> 
+            <td><h6><strong>Master AirWayBillNumber:</strong> {this.state.masterAWB.wayBillNumber}</h6></td>
+           
+            </tr>
+            <tr> <td><h6><strong>Tracking Number:</strong> {this.state.masterAWB.trackingNumber}</h6></td></tr>
+          </table>     
 
-    console.log(this.state);
-    console.log(this.state.manifest.jobManifestBranchs);
-    console.log(this.state.manifest.jobManifestLogs);
+          <br /> <br />
+        </div>);
+      } else {
+        return (<Button onClick={(e) => this.onHandleAWBInfo(e, this.state.manifest.id)} bsStyle="primary">Generate AWB</Button>); 
+      }
+    };
 
     const list = () => {
-      if (this.state.manifest) {
-        return this.state.manifest.jobManifestBranchs.map((branch, index) => {
+      console.log(this.state.masterAWB);
+
+      if (this.state.masterAWB) {
+        return this.state.masterAWB.jobManifestBranchs.map((branch, index) => {
           return (<BranchTable key = {index + 1} index = {index} branchDetails = {branch} />);
         })
       }
@@ -119,19 +146,24 @@ class App extends Component {
                       {this.state.uploadedFileCloudinaryUrl === '' ? null :
                         <div>
                           <p>{this.state.uploadedFile.name}</p>
-                          <img src={this.state.uploadedFileCloudinaryUrl} />
+                          <img src={this.state.uploadedFileCloudinaryUrl} alt="" />
                         </div>}
                     </div>
                     <br />
                     <Button onClick={(e) => this.onHandleClick(e, this.state.uploadedFile)} bsStyle="success">Upload JobFile</Button>
+
                   </form>
+
+                  
 
                 </div>
               </Col>
               <Col xs={6} md={9}>
 
                 <h2> Job Manifest Details </h2>
-
+                
+                {manifestTop()}
+              
                 {list()}
 
               </Col>

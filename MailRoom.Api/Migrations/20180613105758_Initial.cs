@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace MailRoom.Api.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -93,6 +93,7 @@ namespace MailRoom.Api.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     JobId = table.Column<string>(nullable: true),
+                    TrackingNumber = table.Column<string>(nullable: true),
                     WayBillNumber = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -276,7 +277,9 @@ namespace MailRoom.Api.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ClientBranchId = table.Column<int>(nullable: false),
                     DataQuantity = table.Column<int>(nullable: false),
-                    JobManifestId = table.Column<int>(nullable: false)
+                    JobManifestId = table.Column<int>(nullable: false),
+                    TrackingNumber = table.Column<string>(nullable: true),
+                    WayBillNumber = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

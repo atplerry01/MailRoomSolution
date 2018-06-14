@@ -6,11 +6,11 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-import ApolloClient from "apollo-boost";
-import { ApolloProvider } from "react-apollo";
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { RestLink } from "apollo-link-rest";
-import gql from "graphql-tag";
+// import ApolloClient from "apollo-boost";
+// import { ApolloProvider } from "react-apollo";
+// import { InMemoryCache } from 'apollo-cache-inmemory';
+// import { RestLink } from "apollo-link-rest";
+// import gql from "graphql-tag";
 
 
 ReactDOM.render(<App />, document.getElementById('root'));

@@ -11,8 +11,8 @@ using System;
 namespace MailRoom.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180613083600_Initial")]
-    partial class Initial
+    [Migration("20180614102359_InitialUpdateJobBranch")]
+    partial class InitialUpdateJobBranch
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -119,6 +119,12 @@ namespace MailRoom.Api.Migrations
 
                     b.Property<int>("ClientId");
 
+                    b.Property<string>("ContactEmail");
+
+                    b.Property<string>("ContactPhone");
+
+                    b.Property<string>("Email");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
@@ -177,7 +183,11 @@ namespace MailRoom.Api.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("GraphicImage");
+
                     b.Property<string>("JobId");
+
+                    b.Property<string>("TrackingNumber");
 
                     b.Property<string>("WayBillNumber");
 
@@ -195,7 +205,13 @@ namespace MailRoom.Api.Migrations
 
                     b.Property<int>("DataQuantity");
 
+                    b.Property<string>("GraphicImage");
+
                     b.Property<int>("JobManifestId");
+
+                    b.Property<string>("TrackingNumber");
+
+                    b.Property<string>("WayBillNumber");
 
                     b.HasKey("Id");
 

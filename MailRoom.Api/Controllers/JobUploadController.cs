@@ -2,6 +2,8 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using AutoMapper;
 using MailRoom.Api.Models;
 using MailRoom.Api.Persistence;
@@ -10,6 +12,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace MailRoom.Api.Controllers
 {
@@ -19,8 +22,10 @@ namespace MailRoom.Api.Controllers
         private readonly IHostingEnvironment host;
         private readonly ApplicationDbContext context;
         private readonly IMapper mapper;
-        public JobUploadController(ApplicationDbContext context, IMapper mapper, IHostingEnvironment host)
+        private readonly HttpClient client;
+        public JobUploadController(ApplicationDbContext context, IMapper mapper, IHostingEnvironment host, HttpClient client)
         {
+            this.client = client;
             this.mapper = mapper;
             this.context = context;
             this.host = host;
@@ -53,16 +58,16 @@ namespace MailRoom.Api.Controllers
             {
                 if (!string.IsNullOrEmpty(row))
                 {
-                    // get brachId
+                    // get branchId
                     var sn = row.Split(',')[0];
                     var name = row.Split(',')[1];
                     var pan = row.Split(',')[2];
                     var brCode = row.Split(',')[3];
                     var brName = row.Split(',')[4];
-                    var custName = row.Split(',')[5];
-                    var custNumber = row.Split(',')[6];
+                    var customerName = row.Split(',')[5];
+                    var customerNumber = row.Split(',')[6];
                     var accNumber = row.Split(',')[7];
-                    var fName = row.Split(',')[7];
+                    var fName = row.Split(',')[8];
 
                     JobData jobData = new JobData()
                     {
@@ -71,8 +76,8 @@ namespace MailRoom.Api.Controllers
                         Pan = pan,
                         BranchCode = brCode,
                         BranchName = brName,
-                        CustodianName = custName,
-                        CustodianNumber = custNumber,
+                        CustodianName = customerName,
+                        CustodianNumber = customerNumber,
                         AccountNumber = accNumber,
                         FileName = fName,
                         JobId = file.FileName
@@ -92,6 +97,7 @@ namespace MailRoom.Api.Controllers
             JobManifest jobManifest = new JobManifest()
             {
                 WayBillNumber = fileName,
+                //TrackingNumber = Guid.NewGuid().ToString(),
                 JobId = file.FileName
             };
 
@@ -99,7 +105,6 @@ namespace MailRoom.Api.Controllers
             await context.SaveChangesAsync();
 
             // get distinct BranchCode
-            ////////////////////////////
             var selectedBranchCode = context.Jobdatas.Select(b => b.BranchCode).Distinct();
 
             // Iterate thru the branchCode
@@ -117,11 +122,13 @@ namespace MailRoom.Api.Controllers
                     {
                         DataQuantity = dataCount,
                         JobManifestId = jobManifest.Id,
-                        ClientBranchId = clientBranch.Id
+                        ClientBranchId = clientBranch.Id,
+                        JobId = file.FileName
                     };
 
                     context.JobManifestBranches.Add(branchManifest);
                     await context.SaveChangesAsync();
+
 
                     // Create the Branch Logs
                     foreach (var data in branchData)
@@ -148,6 +155,7 @@ namespace MailRoom.Api.Controllers
                     await context.SaveChangesAsync();
                 }
             }
+
             #endregion
 
             // Delete the JobData
@@ -161,19 +169,22 @@ namespace MailRoom.Api.Controllers
             }
 
             await context.SaveChangesAsync();
+
             #endregion
+
 
             //Geth the manifest for the doc
             var completedManifest = await context.JobManifests
-                 .Include(m => m.JobManifestBranchs)
+                .Include(m => m.JobManifestBranchs)
                 .Include(l => l.JobManifestLogs)
                 .SingleOrDefaultAsync(it => it.Id == jobManifest.Id);
 
             if (jobManifest == null) return NotFound();
 
             var jobManifestResource = mapper.Map<JobManifest, JobManifestResource>(completedManifest);
-            
+
             return Ok(jobManifestResource);
         }
+
     }
 }

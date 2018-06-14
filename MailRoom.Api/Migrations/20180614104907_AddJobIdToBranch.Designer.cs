@@ -11,9 +11,10 @@ using System;
 namespace MailRoom.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180614104907_AddJobIdToBranch")]
+    partial class AddJobIdToBranch
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -120,9 +121,9 @@ namespace MailRoom.Api.Migrations
 
                     b.Property<string>("ContactEmail");
 
-                    b.Property<string>("ContactName");
-
                     b.Property<string>("ContactPhone");
+
+                    b.Property<string>("Email");
 
                     b.HasKey("Id");
 
